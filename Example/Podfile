@@ -1,11 +1,11 @@
+
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
+inhibit_all_warnings!
+
 use_frameworks!
 
 target 'Notify_Example' do
-  pod 'Notify', :path => '../'
-
-  target 'Notify_Tests' do
-    inherit! :search_paths
-
-    
-  end
+    pod 'Notify', :path => '../'
+    pod "PodAsset"
 end
