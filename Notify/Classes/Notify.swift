@@ -181,6 +181,13 @@ public extension Notify {
         return self
     }
     
+    public func backgroundColor(color: NotifyColor) -> Self {
+        notifyView.hasData {
+            $0.backgroundColor = color.color
+        }
+        return self
+    }
+    
     public func messageFont(font: UIFont!) -> Self {
         notifyView.hasData {
             $0.message.font = font
@@ -207,6 +214,10 @@ public extension Notify {
     
     public func hide() {
         self.finishAnimating()
+    }
+    
+    public func change() {
+        
     }
 }
 

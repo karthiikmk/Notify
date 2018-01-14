@@ -21,26 +21,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvI-wm-zlc">
-                                <rect key="frame" x="153" y="290" width="37" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="show">
-                                    <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="show:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ehM-zO-7GF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22p-06-eGd">
-                                <rect key="frame" x="260" y="290" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="hide"/>
-                                <connections>
-                                    <action selector="hide:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7CO-PM-0n6"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GPG-jX-bUR">
+                                <rect key="frame" x="10" y="150" width="355" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvI-wm-zlc">
+                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
+                                        <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="show">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="show:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ehM-zO-7GF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76S-11-p5f">
+                                        <rect key="frame" x="121.5" y="0.0" width="112" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="change">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changeWith_sender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="CyT-xN-vAw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22p-06-eGd">
+                                        <rect key="frame" x="243.5" y="0.0" width="111.5" height="30"/>
+                                        <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="hide">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="hide:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7CO-PM-0n6"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="eeB-bT-6cY"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="GPG-jX-bUR" secondAttribute="trailing" constant="10" id="6v5-n5-cOt"/>
+                            <constraint firstItem="GPG-jX-bUR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="150" id="Dpd-2g-wVA"/>
+                            <constraint firstItem="GPG-jX-bUR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="10" id="Xc6-ru-ltx"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mh7-y3-bn3"/>
                 </viewController>

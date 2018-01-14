@@ -15,6 +15,8 @@ class ViewController: UIViewController, NotifyProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "Chats"
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,9 +28,9 @@ class ViewController: UIViewController, NotifyProtocol {
         
         Notify.shared.add(on: self.navigationController!)
             .delegate(for: self)
-            .message(message: "This is example")
+            .message(message: "No network connection")
             .closeIcon(icon: .closeWhite)
-            .messageAlignment(alignment: .left)
+            .backgroundColor(color: .orchid)
             .show()
     }
     
@@ -36,8 +38,14 @@ class ViewController: UIViewController, NotifyProtocol {
         Notify.shared.hide()
     }
     
+    @IBAction func change(_sender: UIButton) {
+    
+        Notify.shared.message(message: "Connected...")
+            .backgroundColor(color: .salmon)
+            .change()
+    }
+    
     func didTapNotifyClose() {
         Notify.shared.hide()
     }
 }
-
