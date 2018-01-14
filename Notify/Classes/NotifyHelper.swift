@@ -30,6 +30,39 @@ public enum NotifyIcon: String {
     }
 }
 
+public enum NotifyColor {
+    
+    case green
+    case gray
+    case red
+    case orange
+    case purple
+    case lightBlue
+    case orchid
+    case salmon
+    
+    var color: UIColor {
+        switch self {
+        case .green:
+            return UIColor(hexString: "#43a047")
+        case .gray:
+            return UIColor(hexString: "#607d8b")
+        case .red:
+            return UIColor(hexString: "##F44336")
+        case .orange:
+            return UIColor(hexString: "#ff5722")
+        case .purple:
+            return UIColor(hexString: "#7c4dff")
+        case .lightBlue:
+            return UIColor(hexString: "#29b6f6")
+        case .orchid:
+            return UIColor(hexString: "#6666FF")
+        case .salmon:
+            return UIColor(hexString: "#FF6666")
+        }
+    }
+}
+
 extension UIView {
     
     static func view(FromNib nib: String? = "Notify") -> UIView? {
