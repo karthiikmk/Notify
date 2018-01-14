@@ -1,10 +1,8 @@
 # Notify
 
-[![CI Status](http://img.shields.io/travis/karthikAdaptavant/Notify.svg?style=flat)](https://travis-ci.org/karthikAdaptavant/Notify)
 [![Version](https://img.shields.io/cocoapods/v/Notify.svg?style=flat)](http://cocoapods.org/pods/Notify)
 [![License](https://img.shields.io/cocoapods/l/Notify.svg?style=flat)](http://cocoapods.org/pods/Notify)
 [![Platform](https://img.shields.io/cocoapods/p/Notify.svg?style=flat)](http://cocoapods.org/pods/Notify)
-
 
 
 ## Example
