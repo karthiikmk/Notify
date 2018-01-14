@@ -30,7 +30,7 @@ class ViewController: UIViewController, NotifyProtocol {
             .delegate(for: self)
             .message(message: "No network connection")
             .closeIcon(icon: .closeWhite)
-            .backgroundColor(color: .orchid)
+            .backgroundColor(color: .orange)
             .show()
     }
     
@@ -41,7 +41,7 @@ class ViewController: UIViewController, NotifyProtocol {
     @IBAction func change(_sender: UIButton) {
     
         Notify.shared.message(message: "Connected...")
-            .backgroundColor(color: .salmon)
+            .backgroundColor(color: .green)
             .change()
     }
     
