@@ -167,6 +167,13 @@ public extension Notify {
         }
         return self
     }
+    
+    public func messageAlignment(alignment: NSTextAlignment = .center) -> Self {
+        notifyView.hasData {
+            $0.message.textAlignment = alignment
+        }
+        return self
+    }
 
     public func backgroundColor(color: UIColor!) -> Self {
         notifyView.hasData {

@@ -28,8 +28,8 @@ class ViewController: UIViewController, NotifyProtocol {
             .delegate(for: self)
             .message(message: "This is example")
             .closeIcon(icon: .closeWhite)
+            .messageAlignment(alignment: .left)
             .show()
-        
     }
     
     @IBAction func hide(_ sender: Any) {
