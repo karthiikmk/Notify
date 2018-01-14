@@ -5,9 +5,13 @@
 [![License](https://img.shields.io/cocoapods/l/Notify.svg?style=flat)](http://cocoapods.org/pods/Notify)
 [![Platform](https://img.shields.io/cocoapods/p/Notify.svg?style=flat)](http://cocoapods.org/pods/Notify)
 
+
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+![Effect](https://github.com/karthikAdaptavant/Notify//raw/master/notify.gif)
 
 ## Requirements
 
