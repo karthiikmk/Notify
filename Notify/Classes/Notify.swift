@@ -1,9 +1,8 @@
 //
-//  Zingle.swift
-//  Zingle
 //
-//  Created by Hemang on 28/12/17.
-//  Copyright © 2017 Hemang Shah. All rights reserved.
+//  Notify
+//
+//  Created by Karthik on 1/14/18.
 //
 
 import UIKit
