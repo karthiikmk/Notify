@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Notify
 
 class ViewController: UIViewController {
 
@@ -20,5 +21,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func show(_ sender: Any) {
+    }
+    @IBAction func hide(_ sender: Any) {
+    }
 }
 
