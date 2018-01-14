@@ -9,11 +9,12 @@
 import UIKit
 import Notify
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, NotifyProtocol {
+
+    var alert: Notify!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,8 +23,22 @@ class ViewController: UIViewController {
     }
 
     @IBAction func show(_ sender: Any) {
+        
+        Notify.shared.add(on: self.navigationController!)
+            .delegate(for: self)
+            .message(message: "This is example")
+            .closeIcon(icon:#imageLiteral(resourceName: "close_white"))
+            .backgroundColor(color: .purple)
+            .show()
+        
     }
+    
     @IBAction func hide(_ sender: Any) {
+        Notify.shared.hide()
+    }
+    
+    func didTapNotifyClose() {
+        Notify.shared.hide()
     }
 }
 

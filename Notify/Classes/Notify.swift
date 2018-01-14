@@ -7,41 +7,23 @@
 //
 
 import UIKit
-import PodAsset
 
-extension UIView{
-    
-    static func view(FromNib nib: String? = "Notify") -> UIView? {
-        guard let podBundle = PodAsset.bundle(forPod: "Notify"), let nib = podBundle.loadNibNamed("Notify", owner: self, options: nil)  else{
-            fatalError()
-        }
-        return nib.first as! UIView
-    }
+public protocol NotifyProtocol: class {
+    func didTapNotifyClose()
 }
 
-public class NotifyConfig {
-    ///Set delay to hide Zingle. Default: 2.0.
-    public var delay: TimeInterval = 2.0
-    ///Set duration of Zingle visible animation. Default: 0.3.
-    public var duration: TimeInterval = 0.3
-    ///Set Zingle message color. Default: white.
-    public var messageColor: UIColor = UIColor.white
-    ///Set Zingle message font. Default: UIFont.systemFont(ofSize: 15).
-    public var messageFont: UIFont = UIFont.systemFont(ofSize: 15)
-    ///Set Zingle message icon. Default: Empty UIImage.
-    public var messageIcon: UIImage! = UIImage.init()
-    ///Set Zingle background color. Default: red.
-    public var backgroundColor: UIColor = UIColor.red
-    
-    public var notifyHeight: CGFloat = 40.0
+protocol NotifyViewProtocol: class {
+    func didTapClose()
 }
 
 open class NotifyView: UIView {
     
+    weak var delegate: NotifyViewProtocol?
+    
     @IBOutlet weak var message: UILabel! {
         didSet {
             message.textColor = UIColor.white
-            message.font = UIFont.systemFont(ofSize: 15)
+            message.font = UIFont.systemFont(ofSize: 16)
             message.backgroundColor = UIColor.clear
             message.textAlignment = .center
             message.text = ""
@@ -62,25 +44,28 @@ open class NotifyView: UIView {
         let instance: NotifyView = NotifyView.view(FromNib: "Notify") as! NotifyView
         return instance
     }
+    
+    @IBAction func close(_ sender: UIButton) {
+        delegate?.didTapClose()
+    }
 }
 
-
-public class Notify: NSObject {
+public class Notify: NSObject, NotifyViewProtocol {
     
-    typealias CompletionBlock = () -> Void
+    public static let shared = Notify()
     
-    fileprivate var notifyView: NotifyView!
+    ///UI'S
     fileprivate var isShowing: Bool = false
-    fileprivate var delay: TimeInterval
-    fileprivate var duration: TimeInterval
+    fileprivate var delay: TimeInterval = 0.2
+    fileprivate var duration: TimeInterval = 1.5
     
     fileprivate var messageColor: UIColor = UIColor.white
-    fileprivate var messageFont: UIFont = UIFont.systemFont(ofSize: 15)
-    fileprivate let notifyHeight: CGFloat = 30.0
+    fileprivate var messageFont: UIFont = UIFont.systemFont(ofSize: 16)
+    fileprivate let notifyHeight: CGFloat = 50
     
-    fileprivate var completion: CompletionBlock? = nil
-    
-    public var navigationController: UINavigationController?
+    public weak var delegate: NotifyProtocol? = nil
+    fileprivate var notifyView: NotifyView? = nil
+    fileprivate var navigationController: UINavigationController?
     
     fileprivate var yPosition: CGFloat {
         
@@ -89,14 +74,8 @@ public class Notify: NSObject {
             return 0.0
         }
         
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
-        print("status bar height: \(statusBarHeight)")
-        
-        return (navController.navigationBar.intrinsicContentSize.height + statusBarHeight)
+        return (navController.navigationBar.intrinsicContentSize.height + UIApplication.shared.statusBarFrame.height)
     }
-    
-    
     
     fileprivate var yPosWhenShowing: CGFloat {
         return self.yPosition
@@ -106,99 +85,110 @@ public class Notify: NSObject {
         let yPos = self.yPosition - notifyHeight
         return yPos
     }
-
-    public required init(duration: TimeInterval = 0.3, delay: TimeInterval = 2.0) {
-        
-        self.notifyView = NotifyView.loadNotifyView()
-        
-        self.delay = delay
-        self.duration = duration
-        
+    
+    public override init() {
         super.init()
-        
-        self.setupNotify()
-    }
-}
-
-// MARK: setup function
-extension Notify {
-    
-    fileprivate func setupNotify() {
-        self.setupView()
-    }
-
-    fileprivate func setupView() {
-        notifyView.backgroundColor = UIColor.backgroundColor
-        notifyView.frame = CGRect(x: 0, y: self.yPosWhenHidden, width: UIScreen.main.bounds.width, height: notifyHeight)
     }
     
-    fileprivate func setupMessageButton() {
-        
-        notifyView.message.then {
-            $0.textColor = self.messageColor
-            $0.font = self.messageFont
-            $0.backgroundColor = UIColor.clear
-            $0.textAlignment = .center
-            $0.text = ""
-        }
+    // MARK: > Delegate
+    func didTapClose() {
+        delegate?.didTapNotifyClose()
     }
 }
 
 // MARK: chaning function and show / hide functions
 public extension Notify {
     
-    ///Set Zingle message to display.
-    public func message(message: String!) -> Self {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.duration/4.0) {
-            self.notifyView.message.text = message
-        }
-        return self
-    }
-    
-    ///Set Zingle message icon.
-    public func messageIcon(icon: UIImage!) -> Self {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.duration/1.5) {
-            //self.messageButton.setImage(icon, for: .normal)
-        }
-        return self
-    }
-    
-    ///Set Zingle message color.
-    public func messageColor(color: UIColor!) -> Self {
-        notifyView.message.textColor = color
-        return self
-    }
-    
-    ///Set Zingle background color.
-    public func backgroundColor(color: UIColor!) -> Self {
-        notifyView.message.backgroundColor = color
-        return self
-    }
-    
-    ///Set Zingle message font.
-    public func messageFont(font: UIFont!) -> Self {
-        self.notifyView.message.font = font
-        return self
-    }
-    
-    ///Handle Zinlge completion.
-    public func completion(_ completion: @escaping () -> Void) -> Self {
-        self.completion = completion
-        return self
-    }
-    
-    ///Show Zingle.
-    public func show() -> Self {
+    //Should be called first
+    public func add(on navigationController: UINavigationController) -> Self {
         
-        self.adjustView()
+        self.navigationController = navigationController
+        self.delegate = delegate
+        
+        if let alreadyShowing = self.notifyView {
+            self.isShowing = false
+            alreadyShowing.removeFromSuperview()
+        }
+        
+        self.setupNotify()
+        
+        return self
+    }
+    
+    fileprivate func setupNotify() {
+        
+        self.notifyView = NotifyView.loadNotifyView()
+        self.notifyView!.delegate = self
+        self.notifyView!.backgroundColor = UIColor(hexString: "6666FF")
+        self.notifyView!.frame = CGRect(x: 0, y: self.yPosWhenHidden, width: UIScreen.main.bounds.width, height: notifyHeight)
+    }
+    
+    public func delegate(for delegator: NotifyProtocol) -> Self {
+        self.delegate = delegator
+        return self
+    }
+    
+    public func message(message: String) -> Self {
+        notifyView.hasData {
+            $0.message.text = message
+        }
+        return self
+    }
+    
+    public func closeIcon(icon: UIImage) -> Self {
+        notifyView.hasData {
+            $0.closeButton.setImage(icon, for: .normal)
+            $0.closeButton.setImage(icon, for: .highlighted)
+            $0.closeButton.setImage(icon, for: .selected)
+        }
+        return self
+    }
+    
+    public func closeIcon(icon: NotifyIcon) -> Self {
+        notifyView.hasData {
+            $0.closeButton.setImage(icon.icon, for: .normal)
+            $0.closeButton.setImage(icon.icon, for: .highlighted)
+            $0.closeButton.setImage(icon.icon, for: .selected)
+        }
+        return self
+    }
+
+    public func messageColor(color: UIColor!) -> Self {
+        notifyView.hasData {
+            $0.message.textColor = color
+        }
+        return self
+    }
+
+    public func backgroundColor(color: UIColor!) -> Self {
+        notifyView.hasData {
+            $0.backgroundColor = color
+        }
+        return self
+    }
+    
+    public func messageFont(font: UIFont!) -> Self {
+        notifyView.hasData {
+            $0.message.font = font
+        }
+        
+        return self
+    }
+
+    public func show(hideAfter delay: TimeInterval = 0) {
+    
+        self.addNotifyInWindow()
         
         self.startAnimation {
+            
+            guard !delay.isZero else {
+                return
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + self.delay) {
-                
+                self.finishAnimating()
             }
         }
-        
-        return self
     }
     
     public func hide() {
@@ -209,31 +199,46 @@ public extension Notify {
 // MARK: animation functions
 extension Notify {
     
-    fileprivate func startAnimation(completion: @escaping () -> Void) {
+    fileprivate func startAnimation(completion: (() -> Void)? = nil) {
+        
+        guard let notifyView = self.notifyView else {
+            return
+        }
         
         guard !self.isShowing else {
             return
         }
         
         self.isShowing = true
-        notifyView.alpha = 1.0
+        
+        notifyView.alpha = 0
+        notifyView.closeButton.alpha = 0.0
         
         UIView.animate(withDuration: duration, animations: {
-            self.notifyView.frame.origin.y = self.yPosWhenShowing
-            self.notifyView.layoutIfNeeded()
+            
+            notifyView.alpha = 1
+            notifyView.frame.origin.y = self.yPosWhenShowing
+            notifyView.layoutIfNeeded()
+            
         }) { _ in
-            completion()
+            notifyView.closeButton.alpha = 1.0
+            completion?()
         }
     }
     
     fileprivate func finishAnimating() {
+        
+        guard let notifyView = self.notifyView else {
+            return
+        }
+        
         UIView.animate(withDuration: duration, animations: {
-            self.notifyView.frame.origin.y = self.yPosWhenHidden
-            self.notifyView.alpha = 0.0
-            self.notifyView.layoutIfNeeded()
+            notifyView.frame.origin.y = self.yPosWhenHidden
+            notifyView.layoutIfNeeded()
         }) { _ in
+            notifyView.alpha = 0.0
             self.isShowing = false
-            self.completion?()
+            notifyView.removeFromSuperview()
         }
     }
 }
@@ -241,23 +246,14 @@ extension Notify {
 // MARK: manage window hierarchy functions
 extension Notify {
     
-    fileprivate func adjustView() {
-        self.addZingleViewInWindow()
-    }
-    
-    fileprivate func addZingleViewInWindow() {
-        guard let keyWindow = UIApplication.shared.keyWindow,
-            let rootViewController = keyWindow.rootViewController as? UINavigationController else {
-                return
+    fileprivate func addNotifyInWindow() {
+        
+        guard let navController = self.navigationController else {
+            print("Error: Navigation controller not found")
+            return
         }
-        let navigationBar = rootViewController.navigationBar
-        rootViewController.view.insertSubview(self.notifyView, belowSubview: navigationBar)
-    }
-}
-
-// MARK: Extensions
-fileprivate extension UIColor {
-    static var backgroundColor: UIColor {
-        return .blue
+        
+        let navigationBar = navController.navigationBar
+        navController.view.insertSubview(self.notifyView!, belowSubview: navigationBar)
     }
 }
