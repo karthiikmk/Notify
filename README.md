@@ -9,7 +9,7 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-![Effect](https://github.com/karthikAdaptavant/Notify//raw/master/notiefy.gif)
+![Effect](https://github.com/karthikAdaptavant/Notify//raw/master/Notify2.gif)
 
 ## Requirements
 
