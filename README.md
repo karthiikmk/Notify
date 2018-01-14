@@ -17,9 +17,19 @@ Notify is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Notify'
+pod 'Notiefy'
 ```
 
+## How to use
+
+```swift
+    Notify.shared.add(on: self.navigationController!)
+             .delegate(for: self)
+             .message(message: "This is example")
+             .closeIcon(icon: .closeWhite)
+             .messageAlignment(alignment: .left)
+             .show()
+```
 ## Author
 
 karthikAdaptavant, karthik.samy@a-cti.com
