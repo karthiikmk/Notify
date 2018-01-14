@@ -56,12 +56,12 @@ public class Notify: NSObject, NotifyViewProtocol {
     
     ///UI'S
     fileprivate var isShowing: Bool = false
-    fileprivate var delay: TimeInterval = 0.2
-    fileprivate var duration: TimeInterval = 1.5
+    fileprivate var canShowClose: Bool = false
+    fileprivate var duration: TimeInterval = 0.4
     
     fileprivate var messageColor: UIColor = UIColor.white
     fileprivate var messageFont: UIFont = UIFont.systemFont(ofSize: 16)
-    fileprivate let notifyHeight: CGFloat = 50
+    fileprivate var notifyHeight: CGFloat = 30
     
     public weak var delegate: NotifyProtocol? = nil
     fileprivate var notifyView: NotifyView? = nil
@@ -100,9 +100,10 @@ public class Notify: NSObject, NotifyViewProtocol {
 public extension Notify {
     
     //Should be called first
-    public func add(on navigationController: UINavigationController) -> Self {
+    public func add(on navigationController: UINavigationController, withHeight height: CGFloat = 30) -> Self {
         
         self.navigationController = navigationController
+        self.notifyHeight = height
         self.delegate = delegate
         
         if let alreadyShowing = self.notifyView {
@@ -128,6 +129,11 @@ public extension Notify {
         return self
     }
     
+    public func speed(speed: TimeInterval = 0.4) -> Self {
+        self.duration = speed
+        return self
+    }
+    
     public func message(message: String) -> Self {
         notifyView.hasData {
             $0.message.text = message
@@ -141,6 +147,7 @@ public extension Notify {
             $0.closeButton.setImage(icon, for: .highlighted)
             $0.closeButton.setImage(icon, for: .selected)
         }
+        canShowClose = true
         return self
     }
     
@@ -185,7 +192,7 @@ public extension Notify {
                 return
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + self.delay) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 self.finishAnimating()
             }
         }
@@ -221,7 +228,7 @@ extension Notify {
             notifyView.layoutIfNeeded()
             
         }) { _ in
-            notifyView.closeButton.alpha = 1.0
+            notifyView.closeButton.alpha = self.canShowClose ? 1.0 : 0.0
             completion?()
         }
     }

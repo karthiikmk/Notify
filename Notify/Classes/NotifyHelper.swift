@@ -36,7 +36,7 @@ extension UIView {
         guard let podBundle = PodAsset.bundle(forPod: "Notify"), let nib = podBundle.loadNibNamed("Notify", owner: self, options: nil)  else{
             fatalError()
         }
-        return nib.first as! UIView
+        return nib.first as? UIView
     }
 }
 

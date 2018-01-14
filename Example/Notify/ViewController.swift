@@ -27,8 +27,7 @@ class ViewController: UIViewController, NotifyProtocol {
         Notify.shared.add(on: self.navigationController!)
             .delegate(for: self)
             .message(message: "This is example")
-            .closeIcon(icon:#imageLiteral(resourceName: "close_white"))
-            .backgroundColor(color: .purple)
+            .closeIcon(icon: #imageLiteral(resourceName: "close_white"))
             .show()
         
     }
