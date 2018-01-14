@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="A0a-wK-r1S" customClass="NotifyView" customModule="Notify" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="460" height="68"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is notification test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ept-Ad-4G5">
+                    <rect key="frame" x="20" y="0.0" width="390" height="68"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6nY-Ov-AeD">
+                    <rect key="frame" x="410" y="0.0" width="50" height="68"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="6dM-xR-X0R"/>
+                    </constraints>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.53725490200000003" green="0.81960784310000001" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6nY-Ov-AeD" firstAttribute="top" secondItem="u4s-9K-ifZ" secondAttribute="top" id="C5c-UK-iaW"/>
+                <constraint firstItem="6nY-Ov-AeD" firstAttribute="leading" secondItem="ept-Ad-4G5" secondAttribute="trailing" id="PK6-eo-Iii"/>
+                <constraint firstItem="ept-Ad-4G5" firstAttribute="top" secondItem="u4s-9K-ifZ" secondAttribute="top" id="Qlt-c5-zNW"/>
+                <constraint firstItem="ept-Ad-4G5" firstAttribute="leading" secondItem="u4s-9K-ifZ" secondAttribute="leading" constant="20" id="aFa-OB-wIi"/>
+                <constraint firstItem="6nY-Ov-AeD" firstAttribute="trailing" secondItem="u4s-9K-ifZ" secondAttribute="trailing" id="rqL-aD-px5"/>
+                <constraint firstItem="u4s-9K-ifZ" firstAttribute="bottom" secondItem="ept-Ad-4G5" secondAttribute="bottom" id="vAq-5w-qQZ"/>
+                <constraint firstItem="u4s-9K-ifZ" firstAttribute="bottom" secondItem="6nY-Ov-AeD" secondAttribute="bottom" id="wXj-XU-PSD"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="u4s-9K-ifZ"/>
+            <connections>
+                <outlet property="closeButton" destination="6nY-Ov-AeD" id="4kh-bv-aEG"/>
+                <outlet property="message" destination="ept-Ad-4G5" id="OnQ-SD-huO"/>
+            </connections>
+            <point key="canvasLocation" x="130" y="-491"/>
+        </view>
+    </objects>
+</document>
