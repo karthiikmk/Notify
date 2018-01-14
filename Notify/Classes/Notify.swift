@@ -157,6 +157,7 @@ public extension Notify {
             $0.closeButton.setImage(icon.icon, for: .highlighted)
             $0.closeButton.setImage(icon.icon, for: .selected)
         }
+        canShowClose = true
         return self
     }
 
