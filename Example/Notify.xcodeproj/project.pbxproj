@@ -26,7 +26,7 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		95F798965E26DAA3C93A05AA /* Notify.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Notify.podspec; path = ../Notify.podspec; sourceTree = "<group>"; };
+		95F798965E26DAA3C93A05AA /* Notiefy.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Notiefy.podspec; path = ../Notiefy.podspec; sourceTree = "<group>"; };
 		B2BC8E1619166C7BBAE1EDF2 /* Pods_Notify_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notify_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B7937AF7DC038F6E20FE36 /* Pods-Notify_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notify_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Notify_Example/Pods-Notify_Example.release.xcconfig"; sourceTree = "<group>"; };
 		CCA600FBC14163CC00CAD795 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				95F798965E26DAA3C93A05AA /* Notify.podspec */,
+				95F798965E26DAA3C93A05AA /* Notiefy.podspec */,
 				F74E3DC0BB69986CBFF9E538 /* README.md */,
 				CCA600FBC14163CC00CAD795 /* LICENSE */,
 			);
