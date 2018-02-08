@@ -134,63 +134,63 @@ public extension Notify {
     }
     
     public func message(message: String) -> Self {
-        notifyView.hasData {
-            $0.message.text = message
+        if let view = notifyView {
+            view.message.text = message
         }
         return self
     }
     
     public func closeIcon(icon: UIImage) -> Self {
-        notifyView.hasData {
-            $0.closeButton.setImage(icon, for: .normal)
-            $0.closeButton.setImage(icon, for: .highlighted)
-            $0.closeButton.setImage(icon, for: .selected)
+        if let view = notifyView {
+            view.closeButton.setImage(icon, for: .normal)
+            view.closeButton.setImage(icon, for: .highlighted)
+            view.closeButton.setImage(icon, for: .selected)
         }
         canShowClose = true
         return self
     }
     
     public func closeIcon(icon: NotifyIcon) -> Self {
-        notifyView.hasData {
-            $0.closeButton.setImage(icon.icon, for: .normal)
-            $0.closeButton.setImage(icon.icon, for: .highlighted)
-            $0.closeButton.setImage(icon.icon, for: .selected)
+        if let view = notifyView {
+            view.closeButton.setImage(icon.icon, for: .normal)
+            view.closeButton.setImage(icon.icon, for: .highlighted)
+            view.closeButton.setImage(icon.icon, for: .selected)
         }
         canShowClose = true
         return self
     }
 
     public func messageColor(color: UIColor!) -> Self {
-        notifyView.hasData {
-            $0.message.textColor = color
+        if let view = notifyView {
+            view.message.textColor = color
         }
         return self
     }
     
     public func messageAlignment(alignment: NSTextAlignment = .center) -> Self {
-        notifyView.hasData {
-            $0.message.textAlignment = alignment
+        if let view = notifyView {
+            view.message.textAlignment = alignment
         }
         return self
     }
 
     public func backgroundColor(color: UIColor!) -> Self {
-        notifyView.hasData {
-            $0.backgroundColor = color
+        if let view = notifyView {
+            view.backgroundColor = color
         }
         return self
     }
     
     public func backgroundColor(color: NotifyColor) -> Self {
-        notifyView.hasData {
-            $0.backgroundColor = color.color
+        if let view = notifyView {
+            view.backgroundColor = color.color
         }
         return self
     }
     
     public func messageFont(font: UIFont!) -> Self {
-        notifyView.hasData {
-            $0.message.font = font
+        if let view = notifyView {
+            view.message.font = font
         }
         
         return self
