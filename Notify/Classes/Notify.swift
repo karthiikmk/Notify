@@ -7,17 +7,17 @@
 
 import UIKit
 
-public protocol NotifyProtocol: class {
+public protocol NotifyDelegate: class {
     func didTapNotifyClose()
 }
 
-protocol NotifyViewProtocol: class {
+protocol NotifyViewDelegate: class {
     func didTapClose()
 }
 
 open class NotifyView: UIView {
     
-    weak var delegate: NotifyViewProtocol?
+    weak var delegate: NotifyViewDelegate?
     
     @IBOutlet weak var message: UILabel! {
         didSet {
@@ -39,9 +39,8 @@ open class NotifyView: UIView {
         super.init(coder: aDecoder)
     }
 
-    public static func loadNotifyView() -> NotifyView {
-        let instance: NotifyView = NotifyView.view(FromNib: "Notify") as! NotifyView
-        return instance
+    public static func loadNotifyView() -> NotifyView? {
+        return NotifyView.loadFromXib()
     }
     
     @IBAction func close(_ sender: UIButton) {
@@ -49,7 +48,7 @@ open class NotifyView: UIView {
     }
 }
 
-public class Notify: NSObject, NotifyViewProtocol {
+public class Notify: NSObject, NotifyViewDelegate {
     
     public static let shared = Notify()
     
@@ -62,7 +61,7 @@ public class Notify: NSObject, NotifyViewProtocol {
     fileprivate var messageFont: UIFont = UIFont.systemFont(ofSize: 16)
     fileprivate var notifyHeight: CGFloat = 30
     
-    public weak var delegate: NotifyProtocol? = nil
+    public weak var delegate: NotifyDelegate? = nil
     fileprivate var notifyView: NotifyView? = nil
     fileprivate var navigationController: UINavigationController?
     
@@ -118,12 +117,12 @@ public extension Notify {
     fileprivate func setupNotify() {
         
         self.notifyView = NotifyView.loadNotifyView()
-        self.notifyView!.delegate = self
-        self.notifyView!.backgroundColor = UIColor(hexString: "6666FF")
-        self.notifyView!.frame = CGRect(x: 0, y: self.yPosWhenHidden, width: UIScreen.main.bounds.width, height: notifyHeight)
+        self.notifyView?.delegate = self
+        self.notifyView?.backgroundColor = UIColor(hexStr: "6666FF")
+        self.notifyView?.frame = CGRect(x: 0, y: self.yPosWhenHidden, width: UIScreen.main.bounds.width, height: notifyHeight)
     }
     
-    public func delegate(for delegator: NotifyProtocol) -> Self {
+    public func delegate(for delegator: NotifyDelegate) -> Self {
         self.delegate = delegator
         return self
     }
@@ -134,63 +133,63 @@ public extension Notify {
     }
     
     public func message(message: String) -> Self {
-        notifyView.hasData {
-            $0.message.text = message
+        if let view = notifyView {
+            view.message.text = message
         }
         return self
     }
     
     public func closeIcon(icon: UIImage) -> Self {
-        notifyView.hasData {
-            $0.closeButton.setImage(icon, for: .normal)
-            $0.closeButton.setImage(icon, for: .highlighted)
-            $0.closeButton.setImage(icon, for: .selected)
+        if let view = notifyView {
+            view.closeButton.setImage(icon, for: .normal)
+            view.closeButton.setImage(icon, for: .highlighted)
+            view.closeButton.setImage(icon, for: .selected)
         }
         canShowClose = true
         return self
     }
     
     public func closeIcon(icon: NotifyIcon) -> Self {
-        notifyView.hasData {
-            $0.closeButton.setImage(icon.icon, for: .normal)
-            $0.closeButton.setImage(icon.icon, for: .highlighted)
-            $0.closeButton.setImage(icon.icon, for: .selected)
+        if let view = notifyView {
+            view.closeButton.setImage(icon.icon, for: .normal)
+            view.closeButton.setImage(icon.icon, for: .highlighted)
+            view.closeButton.setImage(icon.icon, for: .selected)
         }
         canShowClose = true
         return self
     }
 
     public func messageColor(color: UIColor!) -> Self {
-        notifyView.hasData {
-            $0.message.textColor = color
+        if let view = notifyView {
+            view.message.textColor = color
         }
         return self
     }
     
     public func messageAlignment(alignment: NSTextAlignment = .center) -> Self {
-        notifyView.hasData {
-            $0.message.textAlignment = alignment
+        if let view = notifyView {
+            view.message.textAlignment = alignment
         }
         return self
     }
 
     public func backgroundColor(color: UIColor!) -> Self {
-        notifyView.hasData {
-            $0.backgroundColor = color
+        if let view = notifyView {
+            view.backgroundColor = color
         }
         return self
     }
     
     public func backgroundColor(color: NotifyColor) -> Self {
-        notifyView.hasData {
-            $0.backgroundColor = color.color
+        if let view = notifyView {
+            view.backgroundColor = color.color
         }
         return self
     }
     
     public func messageFont(font: UIFont!) -> Self {
-        notifyView.hasData {
-            $0.message.font = font
+        if let view = notifyView {
+            view.message.font = font
         }
         
         return self
@@ -278,7 +277,12 @@ extension Notify {
             return
         }
         
+        guard let view = self.notifyView else {
+            print("Error: NotifyView not available")
+            return
+        }
+        
         let navigationBar = navController.navigationBar
-        navController.view.insertSubview(self.notifyView!, belowSubview: navigationBar)
+        navController.view.insertSubview(view, belowSubview: navigationBar)
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PodAsset
 
 public enum NotifyIcon: String {
     
@@ -18,10 +17,10 @@ public enum NotifyIcon: String {
         switch self {
             
         case .closeGray:
-            return "close_gray"
+            return "Close-Gray"
             
         case .closeWhite:
-            return "close_white"
+            return "Close-White"
         }
     }
     
@@ -44,42 +43,78 @@ public enum NotifyColor {
     var color: UIColor {
         switch self {
         case .green:
-            return UIColor(hexString: "#43a047")
+            return UIColor(hexStr: "#43a047")
         case .gray:
-            return UIColor(hexString: "#607d8b")
+            return UIColor(hexStr: "#607d8b")
         case .red:
-            return UIColor(hexString: "##F44336")
+            return UIColor(hexStr: "##F44336")
         case .orange:
-            return UIColor(hexString: "#ff5722")
+            return UIColor(hexStr: "#ff5722")
         case .purple:
-            return UIColor(hexString: "#7c4dff")
+            return UIColor(hexStr: "#7c4dff")
         case .lightBlue:
-            return UIColor(hexString: "#29b6f6")
+            return UIColor(hexStr: "#29b6f6")
         case .orchid:
-            return UIColor(hexString: "#6666FF")
+            return UIColor(hexStr: "#6666FF")
         case .salmon:
-            return UIColor(hexString: "#FF6666")
+            return UIColor(hexStr: "#FF6666")
         }
     }
 }
 
 extension UIView {
     
-    static func view(FromNib nib: String? = "Notify") -> UIView? {
-        guard let podBundle = PodAsset.bundle(forPod: "Notify"), let nib = podBundle.loadNibNamed("Notify", owner: self, options: nil)  else{
-            fatalError()
+    static func loadFromXib(withOwner: Any? = nil, options: [AnyHashable : Any]? = nil) -> NotifyView? {
+        
+        let bundle = Bundle(for: self)
+        let nib = UINib(nibName: "Notify", bundle: bundle)
+        guard let view = nib.instantiate(withOwner: withOwner, options: options).first as? NotifyView else {
+            return nil
+        }        
+        return view
+    }
+}
+
+extension UIColor {
+    convenience init(hexStr: String) {
+        let hex = hexStr.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.characters.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
         }
-        return nib.first as? UIView
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }
 
 class NotifyHelper {
     
-    public static func getImageFromBundle(name: String = "Notify") -> UIImage {
+    static func getBundle() -> Bundle? {
         
-        let podBundle = PodAsset.bundle(forPod: name)
+        let podBundle = Bundle(for: self)
         
-        guard let image = UIImage(named: name, in: podBundle, compatibleWith: nil) else {
+        guard let bundleUrl = podBundle.url(forResource: "Notify", withExtension: "bundle") else {
+            return nil
+        }
+        
+        guard let bundle = Bundle(url: bundleUrl) else {
+            return nil
+        }
+        
+        return bundle
+    }
+    
+    static func getImageFromBundle(name: String = "Notify") -> UIImage {
+        
+        guard let podBundle = self.getBundle(), let image = UIImage(named: name, in: podBundle, compatibleWith: nil) else {
             return UIImage()
         }
         
