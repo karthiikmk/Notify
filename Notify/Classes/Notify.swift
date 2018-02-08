@@ -119,7 +119,7 @@ public extension Notify {
         
         self.notifyView = NotifyView.loadNotifyView()
         self.notifyView!.delegate = self
-        self.notifyView!.backgroundColor = UIColor(hexString: "6666FF")
+        self.notifyView!.backgroundColor = UIColor(hexStr: "6666FF")
         self.notifyView!.frame = CGRect(x: 0, y: self.yPosWhenHidden, width: UIScreen.main.bounds.width, height: notifyHeight)
     }
     

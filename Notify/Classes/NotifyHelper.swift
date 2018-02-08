@@ -44,21 +44,21 @@ public enum NotifyColor {
     var color: UIColor {
         switch self {
         case .green:
-            return UIColor(hexString: "#43a047")
+            return UIColor(hexStr: "#43a047")
         case .gray:
-            return UIColor(hexString: "#607d8b")
+            return UIColor(hexStr: "#607d8b")
         case .red:
-            return UIColor(hexString: "##F44336")
+            return UIColor(hexStr: "##F44336")
         case .orange:
-            return UIColor(hexString: "#ff5722")
+            return UIColor(hexStr: "#ff5722")
         case .purple:
-            return UIColor(hexString: "#7c4dff")
+            return UIColor(hexStr: "#7c4dff")
         case .lightBlue:
-            return UIColor(hexString: "#29b6f6")
+            return UIColor(hexStr: "#29b6f6")
         case .orchid:
-            return UIColor(hexString: "#6666FF")
+            return UIColor(hexStr: "#6666FF")
         case .salmon:
-            return UIColor(hexString: "#FF6666")
+            return UIColor(hexStr: "#FF6666")
         }
     }
 }
@@ -74,8 +74,8 @@ extension UIView {
 }
 
 extension UIColor {
-    convenience init(hexString: String) {
-        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+    convenience init(hexStr: String) {
+        let hex = hexStr.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt32()
         Scanner(string: hex).scanHexInt32(&int)
         let a, r, g, b: UInt32
@@ -106,33 +106,3 @@ class NotifyHelper {
         return image
     }
 }
-
-
-//public protocol OptionalType {
-//    associatedtype Wrapped
-//    var value: Wrapped? { get }
-//}
-//
-//extension Optional: OptionalType {
-//    public var value: Wrapped? {
-//        return self
-//    }
-//    
-//    @discardableResult
-//    public func hasData(_ closure: (Wrapped) -> Void) -> Optional {
-//        if case .some(let item) = self {
-//            closure(item)
-//        }
-//        
-//        return self
-//    }
-//    
-//    public func otherwise(_ closure: () -> Void) {
-//        if case .none = self {
-//            closure()
-//        }
-//    }
-//}
-
-
-
