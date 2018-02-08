@@ -7,11 +7,9 @@
 //
 
 import UIKit
-import Notify
+import Notiefy
 
-class ViewController: UIViewController, NotifyProtocol {
-
-    var alert: Notify!
+class ViewController: UIViewController, NotifyDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()

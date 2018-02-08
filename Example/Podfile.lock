@@ -1,20 +1,16 @@
 PODS:
-  - Notify (1.0):
-    - PodAsset
-  - PodAsset (0.22.0)
+  - Notiefy (1.2)
 
 DEPENDENCIES:
-  - Notify (from `../`)
-  - PodAsset
+  - Notiefy (from `../`)
 
 EXTERNAL SOURCES:
-  Notify:
+  Notiefy:
     :path: ../
 
 SPEC CHECKSUMS:
-  Notify: 93564dd47cfc0af446fd692220b5e62dcf6a6111
-  PodAsset: d9d35b6a86ceaeaead63692a1bce27b4aea243b3
+  Notiefy: 8fd1b99b7f9926505ca8c1b62fc4e4692b0c3f3c
 
-PODFILE CHECKSUM: 9f527174e6c4a53ce26c82acdb18c51e5618e4f2
+PODFILE CHECKSUM: eec47029d4b0c7e9be7f1f532ccbd88d4e3e4fed
 
 COCOAPODS: 1.3.1

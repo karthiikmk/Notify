@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PodAsset
 
 public enum NotifyIcon: String {
     
@@ -18,10 +17,10 @@ public enum NotifyIcon: String {
         switch self {
             
         case .closeGray:
-            return "close_gray"
+            return "Close-Gray"
             
         case .closeWhite:
-            return "close_white"
+            return "Close-White"
         }
     }
     
@@ -65,11 +64,14 @@ public enum NotifyColor {
 
 extension UIView {
     
-    static func view(FromNib nib: String? = "Notify") -> UIView? {
-        guard let podBundle = PodAsset.bundle(forPod: "Notify"), let nib = podBundle.loadNibNamed("Notify", owner: self, options: nil)  else{
-            fatalError()
-        }
-        return nib.first as? UIView
+    static func loadFromXib(withOwner: Any? = nil, options: [AnyHashable : Any]? = nil) -> NotifyView? {
+        
+        let bundle = Bundle(for: self)
+        let nib = UINib(nibName: "Notify", bundle: bundle)
+        guard let view = nib.instantiate(withOwner: withOwner, options: options).first as? NotifyView else {
+            return nil
+        }        
+        return view
     }
 }
 
@@ -95,11 +97,24 @@ extension UIColor {
 
 class NotifyHelper {
     
-    public static func getImageFromBundle(name: String = "Notify") -> UIImage {
+    static func getBundle() -> Bundle? {
         
-        let podBundle = PodAsset.bundle(forPod: name)
+        let podBundle = Bundle(for: self)
         
-        guard let image = UIImage(named: name, in: podBundle, compatibleWith: nil) else {
+        guard let bundleUrl = podBundle.url(forResource: "Notify", withExtension: "bundle") else {
+            return nil
+        }
+        
+        guard let bundle = Bundle(url: bundleUrl) else {
+            return nil
+        }
+        
+        return bundle
+    }
+    
+    static func getImageFromBundle(name: String = "Notify") -> UIImage {
+        
+        guard let podBundle = self.getBundle(), let image = UIImage(named: name, in: podBundle, compatibleWith: nil) else {
             return UIImage()
         }
         
