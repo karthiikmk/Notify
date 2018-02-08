@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Notiefy'
-  s.version          = '1.1'
+  s.version          = '1.3'
   s.summary          = 'Sweet For Notify'
 
   s.description      = "A sweet for notify updates"
@@ -19,7 +19,5 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'Notify' => ['Notify/Classes/**/*.{xib}', 'Notify/Assets/**/*.{xcassets}']
   }
-
-  s.dependency 'PodAsset'
 
 end
