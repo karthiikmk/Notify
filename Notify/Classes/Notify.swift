@@ -52,6 +52,8 @@ public class Notify: NSObject, NotifyViewDelegate {
     
     public static let shared = Notify()
     
+    open var notifyView: NotifyView? = nil
+    
     ///UI'S
     fileprivate var isShowing: Bool = false
     fileprivate var canShowClose: Bool = false
@@ -62,7 +64,6 @@ public class Notify: NSObject, NotifyViewDelegate {
     fileprivate var notifyHeight: CGFloat = 30
     
     public weak var delegate: NotifyDelegate? = nil
-    fileprivate var notifyView: NotifyView? = nil
     fileprivate var navigationController: UINavigationController?
     
     fileprivate var yPosition: CGFloat {
