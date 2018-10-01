@@ -62,6 +62,7 @@ public class Notify: NSObject, NotifyViewDelegate {
     fileprivate var messageColor: UIColor = UIColor.white
     fileprivate var messageFont: UIFont = UIFont.systemFont(ofSize: 16)
     fileprivate var notifyHeight: CGFloat = 30
+    fileprivate var customYPosition: CGFloat?
     
     public weak var delegate: NotifyDelegate? = nil
     fileprivate var navigationController: UINavigationController?
@@ -73,7 +74,10 @@ public class Notify: NSObject, NotifyViewDelegate {
             return 0.0
         }
         
-        return (navController.navigationBar.intrinsicContentSize.height + UIApplication.shared.statusBarFrame.height)
+        guard let yPos = customYPosition else {
+            return (navController.navigationBar.intrinsicContentSize.height + UIApplication.shared.statusBarFrame.height)
+        }
+        return yPos
     }
     
     fileprivate var yPosWhenShowing: CGFloat {
@@ -99,11 +103,12 @@ public class Notify: NSObject, NotifyViewDelegate {
 public extension Notify {
     
     //Should be called first
-    public func add(on navigationController: UINavigationController, withHeight height: CGFloat = 30) -> Self {
+    public func add(on navigationController: UINavigationController, withHeight height: CGFloat = 30, yPosition yPos: CGFloat? = nil) -> Self {
         
         self.navigationController = navigationController
         self.notifyHeight = height
         self.delegate = delegate
+        self.customYPosition = yPos
         
         if let alreadyShowing = self.notifyView {
             self.isShowing = false

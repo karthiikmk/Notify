@@ -1,16 +1,16 @@
 PODS:
-  - Notiefy (1.2)
+  - Notiefy (1.3)
 
 DEPENDENCIES:
   - Notiefy (from `../`)
 
 EXTERNAL SOURCES:
   Notiefy:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Notiefy: 8fd1b99b7f9926505ca8c1b62fc4e4692b0c3f3c
+  Notiefy: 4a1395e562930b26f42690979ecd91360b929edb
 
 PODFILE CHECKSUM: eec47029d4b0c7e9be7f1f532ccbd88d4e3e4fed
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3
