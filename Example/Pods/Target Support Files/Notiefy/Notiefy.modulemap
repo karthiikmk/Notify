@@ -1,0 +1,6 @@
+framework module Notiefy {
+  umbrella header "Notiefy-umbrella.h"
+
+  export *
+  module * { export * }
+}
